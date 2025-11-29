@@ -1,4 +1,4 @@
-const { test, describe } = require('node:test')
+const { test, describe, beforeEach } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 
@@ -13,7 +13,23 @@ test('dummy returns one', () => {
 
 
 describe('Total likes', () => {
-    test('of blog list with 9 total likes', () => {
+    const listWithOneBlog = [
+        {
+          _id: '5a422aa71b54a676234d17f8',
+          title: 'Go To Statement Considered Harmful',
+          author: 'Edsger W. Dijkstra',
+          url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+          likes: 5,
+          __v: 0
+        }
+      ]
+    
+      test('when list has only one blog, equals the likes of that', () => {
+        const result = listHelper.totalLikes(listWithOneBlog)
+        assert.strictEqual(result, 5)
+      })
+
+    test('of blog list with 9 total likes', () => {   
     const blogList9 = 
     [
         {
@@ -163,6 +179,15 @@ describe('Favorite blog', () => {
 test('Most blog', () => {
     const blogList4 = 
     [
+        {
+            "_id": "691a35f44919c7dede70840b",
+            "title": "Second blog",
+            "author": "B. blog1",
+            "url": "http://blog2",
+            "likes": 2,
+            "__v": 0
+        },
+            
     {
         "_id": "691a35bd4919c7dede708409",
         "title": "First blog",
@@ -177,6 +202,14 @@ test('Most blog', () => {
         "author": "B. blog1",
         "url": "http://blog2",
         "likes": 4,
+        "__v": 0
+    },
+    {
+        "_id": "691a35bd4919c7dede708409",
+        "title": "First blog",
+        "author": "A. blog1",
+        "url": "http://blog1",
+        "likes": 2,
         "__v": 0
     },
     {
@@ -212,11 +245,89 @@ test('Most blog', () => {
         "likes": 2,
         "__v": 0
     },
+    {
+        "_id": "691a35bd4919c7dede708409",
+        "title": "First blog",
+        "author": "A. blog1",
+        "url": "http://blog1",
+        "likes": 2,
+        "__v": 0
+    },
     ]
 
     const result = listHelper.mostBlogs(blogList4)
-    assert.deepStrictEqual(result, {"B. blog1": 3})
+    assert.deepStrictEqual(result, {"B. blog1": 4})
 })
+
+
+test('Most Likes', () => {
+    const blogList = 
+    [
+    {
+        "_id": "691a35bd4919c7dede708409",
+        "title": "First blog",
+        "author": "A. blog1",
+        "url": "http://blog1",
+        "likes": 12,
+        "__v": 0
+    },
+    {
+        "_id": "691a35f44919c7dede70840b",
+        "title": "Second blog",
+        "author": "B. blog1",
+        "url": "http://blog2",
+        "likes": 4,
+        "__v": 0
+    },
+    {
+        "_id": "691aec0b6019b40690e098f9",
+        "title": "Third blog",
+        "author": "C. blog3",
+        "url": "http://blog3",
+        "likes": 2,
+        "__v": 0
+    },
+
+    {
+        "_id": "691a35bd4919c7dede708409",
+        "title": "First blog",
+        "author": "A. blog1",
+        "url": "http://blog1",
+        "likes": 5,
+        "__v": 0
+    },
+
+    {
+        "_id": "691a35f44919c7dede70840b",
+        "title": "Second blog",
+        "author": "B. blog1",
+        "url": "http://blog2",
+        "likes": 2,
+        "__v": 0
+    },
+    
+    {
+        "_id": "691b00286374eadc64bbea35",
+        "title": "Fourth blog",
+        "author": "C. blog4",
+        "url": "http://blog4",
+        "likes": 1,
+        "__v": 0
+    },
+    {
+        "_id": "691a35f44919c7dede70840b",
+        "title": "Second blog",
+        "author": "B. blog1",
+        "url": "http://blog2",
+        "likes": 2,
+        "__v": 0
+    },
+    ]
+
+    const result = listHelper.mostLikes(blogList)
+    assert.deepStrictEqual(result, { author: 'A. blog1', likes: 17 })
+})
+
 
 
 

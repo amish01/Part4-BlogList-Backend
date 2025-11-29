@@ -29,6 +29,30 @@ const totalLikes = (blogs) => {
       
       return mostBlogsAuthor
   }
+
+
+  const mostLikes = (blogList) => {
+    let mostLikesAuthor = {}
+    let mostLikeSize = 0
+      const likeStats = blogList.reduce((blogStats, blog) => {
+      if(!blogStats[blog.author]) {
+        blogStats[blog.author] = blog.likes
+      }else {
+        blogStats[blog.author] += blog.likes 
+      }
+      return blogStats
+      
+      }, {}) 
+      const likesList = Object.entries(likeStats)
+      likesList.reduce((acc, author) => {
+        if (author[1] > mostLikeSize) {
+          mostLikeSize = author[1]
+          mostLikesAuthor.author = author[0]
+          mostLikesAuthor.likes = author[1]
+        }
+      }, likesList[0])
+      return mostLikesAuthor
+  }
   
 
 
@@ -36,5 +60,6 @@ const totalLikes = (blogs) => {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
   }

@@ -6,7 +6,7 @@ const blogList =
       "title": "First blog",
       "author": "A. blog1",
       "url": "http://blog1",
-      "likes": 2,
+      "likes": 1,
       "__v": 0
     },
     {
@@ -41,7 +41,16 @@ const blogList =
     "url": "http://blog4",
     "likes": 1,
     "__v": 0
-    }
+    },
+
+    {
+      "_id": "691a35bd4919c7dede708409",
+      "title": "First blog",
+      "author": "D. blog1",
+      "url": "http://blog1",
+      "likes": 13,
+      "__v": 0
+    },
 ]
 
 
@@ -55,13 +64,44 @@ const mostBlogs = (blogs) => {
 }
 
 
-const blogTotals = {}
-  const blogStatsList = blogList.reduce((blogStats, blog) => {
+// const blogTotals = {}
+//   const blogStatsList = blogList.reduce((blogStats, blog) => {
+//     if(!blogStats[blog.author]) {
+//       blogStats[blog.author] = 1
+//     }else {
+//       blogStats[blog.author] += 1 
+//     }
+//     return blogStats
+//     }, {})
+// console.log(blogStatsList)
+
+
+const mostLikes = (blogList) => {
+  let mostLikesAuthor = {}
+  let mostLikeSize = 0
+    const likeStats = blogList.reduce((blogStats, blog) => {
     if(!blogStats[blog.author]) {
-      blogStats[blog.author] = 1
+      blogStats[blog.author] = blog.likes
     }else {
-      blogStats[blog.author] += 1 
+      blogStats[blog.author] += blog.likes 
     }
     return blogStats
-    }, {})
-console.log(blogStatsList)
+
+    }, {}) 
+    //console.log(likeStats)
+    const likesList = Object.entries(likeStats)
+    likesList.reduce((acc, author) => {
+      if (author[1] > mostLikeSize) {
+        //console.log(author)
+        mostLikeSize = author[1]
+        mostLikesAuthor.author = author[0]
+        mostLikesAuthor.likes = author[1]
+        //console.log(mostLikesAuthor)
+      }
+      
+    }, likesList[0])
+    return mostLikesAuthor
+}
+
+//console.log(mostLikes(blogList))
+//console.log(Object.entries({ 'A. blog1': 2, 'B. blog1': 6, 'C. blog3': 2, 'C. blog4': 1 }))
