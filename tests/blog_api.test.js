@@ -82,6 +82,24 @@ test('default value for like property is zero ', async () => {
   assert.strictEqual(blogsAtEnd[blogsAtEnd.length - 1].likes, 0)
 })
 
+
+test('missing title or url properties ', async () => {
+  const newBlog = {
+    "author": "A. blog02",
+    "url": "http://blog5",
+}
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+
+  const blogsAtEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
