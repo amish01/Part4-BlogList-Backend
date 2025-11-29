@@ -4,6 +4,7 @@ const supertest = require('supertest')
 const app = require('../app')
 const helper = require('./test_helper')
 const Blog = require('../models/blog')
+const assert = require('node:assert')
 
 
 const api = supertest(app)
@@ -33,6 +34,12 @@ test('blogs are returned as json', async () => {
     .get('/api/blogs')
     .expect(200)
     .expect('Content-Type', /application\/json/)
+})
+
+test('verify that blog unique identifier is named id', async () => {
+  const response = await api.get('/api/blogs')
+  
+  assert.strictEqual(Object.keys(response.body[0]).includes('id'), true)
 })
 
 after(async () => {
