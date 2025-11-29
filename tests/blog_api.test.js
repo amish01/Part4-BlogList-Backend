@@ -42,6 +42,34 @@ test('verify that blog unique identifier is named id', async () => {
   assert.strictEqual(Object.keys(response.body[0]).includes('id'), true)
 })
 
+
+test('a valid blog can be added ', async () => {
+  const newBlog = {
+    "title": "POST blog",
+    "author": "A. blog55",
+    "url": "http://blog55",
+    "likes": 3,
+}
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+
+  const blogsAtEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
+  //const helper = require('./test_helper')
+  //const Note = require('../models/note')
+  //const contents = response.body.map(r => r.content)
+  const blogTitles = blogsAtEnd.map(b => b.title)
+
+  //assert.strictEqual(response.body.length, initialNotes.length + 1)
+
+  assert(blogTitles.includes(newBlog.title), true)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
