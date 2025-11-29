@@ -60,14 +60,26 @@ test('a valid blog can be added ', async () => {
 
   const blogsAtEnd = await helper.blogsInDb()
   assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
-  //const helper = require('./test_helper')
-  //const Note = require('../models/note')
-  //const contents = response.body.map(r => r.content)
   const blogTitles = blogsAtEnd.map(b => b.title)
-
-  //assert.strictEqual(response.body.length, initialNotes.length + 1)
-
   assert(blogTitles.includes(newBlog.title), true)
+})
+
+test('default value for like property is zero ', async () => {
+  const newBlog = {
+    "title": "POST with default like property_1",
+    "author": "A. blog02",
+    "url": "http://blog5",
+}
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+
+  const blogsAtEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtEnd[blogsAtEnd.length - 1].likes, 0)
 })
 
 after(async () => {
