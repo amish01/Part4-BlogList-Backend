@@ -115,6 +115,26 @@ test('missing title or url properties ', async () => {
   
     assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length - 1)
   })
+
+  test('information of a blog can be updated ', async () => {
+
+    const blogsAtStart = await helper.blogsInDb()
+    let blogToUpdate = blogsAtStart[0]
+    console.log(blogToUpdate)
+    blogToUpdate = {...blogToUpdate, likes: blogToUpdate.likes + 2}
+   
+  
+    await api
+          .put(`/api/blogs/${blogToUpdate.id}`)
+          .send(blogToUpdate)
+          .expect(200)
+          .expect('Content-Type', /application\/json/)
+
+  
+    const updatedBlog = (await helper.blogsInDb()).find(b => b.id === blogToUpdate.id)
+    console.log(updatedBlog)
+    assert.strictEqual(updatedBlog.likes, blogToUpdate.likes)
+  })
   
 
 after(async () => {
