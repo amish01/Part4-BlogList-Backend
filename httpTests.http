@@ -9,6 +9,16 @@ content-type: application/json
 }
 
 ###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+   "username": "aminu2",
+   "name": "aminuAA",
+   "password": "54321" 
+}
+
+###
 GET http://localhost:3003/api/blogs/
 
 
