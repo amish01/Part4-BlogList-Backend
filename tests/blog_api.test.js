@@ -120,7 +120,7 @@ test('missing title or url properties ', async () => {
 
     const blogsAtStart = await helper.blogsInDb()
     let blogToUpdate = blogsAtStart[0]
-    console.log(blogToUpdate)
+    //console.log(blogToUpdate)
     blogToUpdate = {...blogToUpdate, likes: blogToUpdate.likes + 2}
    
   
@@ -132,9 +132,28 @@ test('missing title or url properties ', async () => {
 
   
     const updatedBlog = (await helper.blogsInDb()).find(b => b.id === blogToUpdate.id)
-    console.log(updatedBlog)
+    //console.log(updatedBlog)
     assert.strictEqual(updatedBlog.likes, blogToUpdate.likes)
   })
+
+  test('user with invalid username or password is not created ', async () => {
+    const newUser = {
+      "username": "AA",
+      "name": "aminu",
+      "password": "aa"
+  }
+  const usersAtStart = await helper.usersInDb()
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+  
+  
+    const usersAtEnd = await helper.usersInDb()
+    assert.strictEqual(usersAtEnd.length, usersAtStart.length)
+  })
+  
   
 
 after(async () => {
