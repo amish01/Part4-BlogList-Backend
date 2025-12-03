@@ -5,7 +5,7 @@ content-type: application/json
     "title": "New blog3",
     "author": "New author3",
     "url": "http://blog33",
-    "likes": 2
+    "likes": 3
 }
 
 ###
@@ -33,4 +33,13 @@ UPDATE http://localhost:3003/api/blogs/691a35bd4919c7dede708409
     "author": "C. blog4",
     "url": "http://blog4",
     "likes": 12
+}
+
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+    "username": "aminu1",
+    "password": "1111"
 }
