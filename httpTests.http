@@ -2,10 +2,10 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-    "title": "Another blog 1",
-    "author": "Y. blog4",
-    "url": "http://blog4",
-    "likes": 4
+    "title": "New blog3",
+    "author": "New author3",
+    "url": "http://blog33",
+    "likes": 2
 }
 
 ###
@@ -13,9 +13,9 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-   "username": "am",
-   "name": "aminuAA",
-   "password": "54" 
+   "username": "aminu3",
+   "name": "aminu33",
+   "password": "3333" 
 }
 
 ###
