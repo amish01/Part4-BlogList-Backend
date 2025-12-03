@@ -2,6 +2,16 @@ const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
+const jwt = require('jsonwebtoken')
+
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.startsWith('Bearer ')) {
+    return authorization.replace('Bearer ', '')
+  }
+  return null
+}
+
 
 blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog.find({}).populate('user') //{ username: 1, name: 1 }
@@ -12,13 +22,23 @@ blogsRouter.get('/', async (request, response) => {
 blogsRouter.post('/', async (request, response) => {
   const body = request.body
 
-  if((body.title === undefined || body.url === undefined))
-    return response.status(400).json({error: 'blog title or url missing'}).end()
-  let blog_user = null
-  const blogUsers = await User.find({})
-  if (blogUsers.length > 0) {
-    blog_user = blogUsers[Math.floor((Math.random()*(blogUsers.length) + 1))]
+  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token invalid' })
   }
+  const user = await User.findById(decodedToken.id)
+
+  if (!user) {
+    return response.status(400).json({ error: 'UserId missing or not valid' })
+  }
+
+  // if((body.title === undefined || body.url === undefined))
+  //   return response.status(400).json({error: 'blog title or url missing'}).end()
+  // let blog_user = null
+  // const blogUsers = await User.find({})
+  // if (blogUsers.length > 0) {
+  //   blog_user = blogUsers[Math.floor((Math.random()*(blogUsers.length) + 1))]
+  // }
   
 
   const blog = new Blog({
@@ -26,12 +46,12 @@ blogsRouter.post('/', async (request, response) => {
     author: body.author,
     url: body.url,
     likes: body.likes,
-    user: blog_user.id
+    user: user.id
   })
 
   const savedBlog = await blog.save()
-  blog_user.blogs = blog_user.blogs.concat(savedBlog.id)
-  await blog_user.save()
+  user.blogs = user.blogs.concat(savedBlog.id)
+  await user.save()
   response.status(201).json(savedBlog)
 
 })
