@@ -1,12 +1,12 @@
 POST http://localhost:3003/api/blogs
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtaW51NSIsImlkIjoiNjkzMDMyNTJhN2E1MzIxZDI1MTExMzBkIiwiaWF0IjoxNzY0Nzg4MjQ0LCJleHAiOjE3NjQ3OTE4NDR9.NBTi2cHZKM9zP_4SQXL1xPAmkYZj41bpXHYPm_0v29k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtaW51NSIsImlkIjoiNjkzMDMyNTJhN2E1MzIxZDI1MTExMzBkIiwiaWF0IjoxNzY0ODAwMDE5LCJleHAiOjE3NjQ4MDM2MTl9.GYukJ7K8Us61KC9zYt-Jid63TQUHU3bvv9Khd8PnLl0
 
 {
-    "title": "New blog144",
-    "author": "New author18775",
+    "title": "New blog1443",
+    "author": "New author359877500",
     "url": "http://blog9955",
-    "likes": 4
+    "likes": 8
 }
 
 ###
@@ -21,11 +21,12 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3003/api/blogs/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtaW51NSIsImlkIjoiNjkzMDMyNTJhN2E1MzIxZDI1MTExMzBkIiwiaWF0IjoxNzY0ODAwMDE5LCJleHAiOjE3NjQ4MDM2MTl9.GYukJ7K8Us61KC9zYt-Jid63TQUHU3bvv9Khd8PnLl0
 
 
 ###
-DELETE http://localhost:3003/api/blogs/69308a348d45afd53da0011c
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtaW51NSIsImlkIjoiNjkzMDMyNTJhN2E1MzIxZDI1MTExMzBkIiwiaWF0IjoxNzY0Nzg4MjQ0LCJleHAiOjE3NjQ3OTE4NDR9.NBTi2cHZKM9zP_4SQXL1xPAmkYZj41bpXHYPm_0v29k
+DELETE http://localhost:3003/api/blogs/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtaW51NSIsImlkIjoiNjkzMDMyNTJhN2E1MzIxZDI1MTExMzBkIiwiaWF0IjoxNzY0ODAwMDE5LCJleHAiOjE3NjQ4MDM2MTl9.GYukJ7K8Us61KC9zYt-Jid63TQUHU3bvv9Khd8PnLl0
 
 
 ###

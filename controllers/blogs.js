@@ -1,6 +1,7 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const middleware = require('../utils/middleware')
 
 const jwt = require('jsonwebtoken')
 
@@ -19,16 +20,16 @@ blogsRouter.get('/', async (request, response) => {
   
 })
   
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   const body = request.body
 
   //const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
-  }
-  const user = await User.findById(decodedToken.id)
-
+  // const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  // if (!decodedToken.id) {
+  //   return response.status(401).json({ error: 'token invalid' })
+  // }
+  //const user = await User.findById(decodedToken.id)
+  const user = request.user
   if (!user) {
     return response.status(400).json({ error: 'UserId missing or not valid' })
   }
@@ -75,26 +76,26 @@ blogsRouter.put('/:id', async (request, response) => {
   return response.status(200).json(updatedBlog)
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
+blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
 
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
-  }
-  const user = await User.findById(decodedToken.id)
-  console.log(user)
+  // const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  // if (!decodedToken.id) {
+  //   return response.status(401).json({ error: 'token invalid' })
+  // }
+  // const user = await User.findById(decodedToken.id)
+  // //console.log(user)
 
+  const user = request.user
   if (!user) {
     return response.status(400).json({ error: 'UserId missing or not valid' })
   }
   const blogToDelete = await Blog.findById(request.params.id)
-  console.log(blogToDelete)
+  //console.log(blogToDelete)
   if (user._id.toString() === blogToDelete.user.toString()) {
-    await Blog.findByIdAndDelete(request.params.id)
+    await Blog.findByIdAndDemiddleware.userExtractor,lete(request.params.id)
   } else {
     return response.status(401).json({ error: 'userId  invalid' })
   }
-
   response.status(204).end()
 })
 
