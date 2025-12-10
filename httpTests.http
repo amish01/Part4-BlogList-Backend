@@ -1,12 +1,12 @@
 POST http://localhost:3003/api/blogs
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtaW51NSIsImlkIjoiNjkzMDMyNTJhN2E1MzIxZDI1MTExMzBkIiwiaWF0IjoxNzY0ODAwMDE5LCJleHAiOjE3NjQ4MDM2MTl9.GYukJ7K8Us61KC9zYt-Jid63TQUHU3bvv9Khd8PnLl0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtaW51MTExMTEiLCJpZCI6IjY5MzE4YTEwNWY5YjM0NzQxNzJiMjNlYSIsImlhdCI6MTc2NDg1NDkwNiwiZXhwIjoxNzY0ODU4NTA2fQ.qR64c-4AGFz-m5nJYHFeMCUcUM3Ou8_TBPeTn1jZsNc
 
 {
-    "title": "New blog1443",
-    "author": "New author359877500",
-    "url": "http://blog9955",
-    "likes": 8
+    "title": "New blog0000",
+    "author": "New author0000",
+    "url": "http://blog000",
+    "likes": 1
 }
 
 ###
@@ -14,14 +14,13 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-   "username": "aminu5",
-   "name": "aminu55",
-   "password": "5555" 
+   "username": "aminu11111",
+   "name": "aminu11",
+   "password": "11111" 
 }
 
 ###
 GET http://localhost:3003/api/blogs/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtaW51NSIsImlkIjoiNjkzMDMyNTJhN2E1MzIxZDI1MTExMzBkIiwiaWF0IjoxNzY0ODAwMDE5LCJleHAiOjE3NjQ4MDM2MTl9.GYukJ7K8Us61KC9zYt-Jid63TQUHU3bvv9Khd8PnLl0
 
 
 ###
@@ -45,6 +44,6 @@ Content-Type: application/json
 
 
 {
-    "username": "aminu5",
-    "password": "5555"
+    "username": "aminu11111",
+    "password": "11111"
 }

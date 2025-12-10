@@ -34,8 +34,11 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
     return response.status(400).json({ error: 'UserId missing or not valid' })
   }
 
-  // if((body.title === undefined || body.url === undefined))
-  //   return response.status(400).json({error: 'blog title or url missing'}).end()
+  if((body.title === undefined || body.url === undefined)) {
+    return response.status(400).json({error: 'blog title or url missing'}).end()
+  }
+  
+
   // let blog_user = null
   // const blogUsers = await User.find({})
   // if (blogUsers.length > 0) {
@@ -92,7 +95,7 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) =
   const blogToDelete = await Blog.findById(request.params.id)
   //console.log(blogToDelete)
   if (user._id.toString() === blogToDelete.user.toString()) {
-    await Blog.findByIdAndDemiddleware.userExtractor,lete(request.params.id)
+    await Blog.findByIdAndDelete(request.params.id)
   } else {
     return response.status(401).json({ error: 'userId  invalid' })
   }

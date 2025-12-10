@@ -27,7 +27,7 @@ const userExtractor = async (request, response, next) => {
     const user = await User.findById(decodedToken.id)
     request.user = user
   }
-  //console.log(user)
+ 
   next()
 }
 module.exports = {tokenExtractor, userExtractor}

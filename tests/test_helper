@@ -17,42 +17,9 @@ const initialBlogs = [
     author: "A. blog1",
     url: "http://blog1",
     likes: 2,
-    __v: 0
   },
-  // {
-  //   _id: "691a35f44919c7dede70840b",
-  //   title: "Second blog",
-  //   author: "B. blog1",
-  //   url: "http://blog2",
-  //   likes: 4,
-  //   __v: 0
-  // },
-  // {
-  //   _id: "691aec0b6019b40690e098f9",
-  //   title: "Third blog",
-  //   author: "C. blog3",
-  //   url: "http://blog3",
-  //   likes: 2,
-  //   __v: 0
-  // },
-  // {
-  //   _id: "691b00286374eadc64bbea35",
-  //   title: "Fourth blog",
-  //   author: "C. blog4",
-  //   url: "http://blog4",
-  //   likes: 1,
-  //   __v: 0
-  // }
-
 ]
 
-// const nonExistingId = async () => {
-//   const note = new Note({ content: 'willremovethissoon' })
-//   await note.save()
-//   await note.deleteOne()
-
-//   return note._id.toString()
-// }
 
 const blogsInDb = async () => {
   const blogs = await Blog.find({})

@@ -6,7 +6,7 @@ const helper = require('./test_helper')
 const Blog = require('../models/blog')
 const assert = require('node:assert')
 
-
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtaW51MTExMTEiLCJpZCI6IjY5MzE4YTEwNWY5YjM0NzQxNzJiMjNlYSIsImlhdCI6MTc2NDg1NzgzOCwiZXhwIjoxNzY0ODYxNDM4fQ._u5O3ZpubQOSdxvgwhBVTde8yZzXBi5LY05tTGXikeU"
 const api = supertest(app)
 
 beforeEach(async () => {
@@ -18,14 +18,6 @@ beforeEach(async () => {
   noteObject = new Blog(helper.initialBlogs[1])
   await noteObject.save()
 
-  // noteObject = new Blog(helper.initialBlogs[2])
-  // await noteObject.save()
-
-  // noteObject = new Blog(helper.initialBlogs[3])
-  // await noteObject.save()
-
-  // noteObject = new Blog(helper.initialBlogs[4])
-  // await noteObject.save()
 })
 
 
@@ -45,14 +37,15 @@ test('verify that blog unique identifier is named id', async () => {
 
 test('a valid blog can be added ', async () => {
   const newBlog = {
-    "title": "POST blog",
-    "author": "A. blog55",
-    "url": "http://blog55",
-    "likes": 3,
+    "title": "POST blog111",
+    "author": "A. blog55111",
+    "url": "http://blog55111",
+    "likes": 3111,
 }
 
   await api
     .post('/api/blogs')
+    .set('Authorization', token)
     .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
@@ -64,6 +57,26 @@ test('a valid blog can be added ', async () => {
   assert(blogTitles.includes(newBlog.title), true)
 })
 
+
+test('adding a blog fails without a valid token ', async () => {
+  const newBlog = {
+    "title": "POST blog22",
+    "author": "A. blog2211",
+    "url": "http://blog55111",
+    "likes": 31,
+}
+
+  await api
+    .post('/api/blogs')
+    .set('Authorization', 'wwoeurw')
+    .send(newBlog)
+    .expect(401)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+  const blogTitles = blogsAtEnd.map(b => b.title)
+})
+
 test('default value for like property is zero ', async () => {
   const newBlog = {
     "title": "POST with default like property_1",
@@ -73,6 +86,7 @@ test('default value for like property is zero ', async () => {
 
   await api
     .post('/api/blogs')
+    .set('Authorization', token)
     .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
@@ -91,6 +105,7 @@ test('missing title or url properties ', async () => {
 
   await api
     .post('/api/blogs')
+    .set('Authorization', token)
     .send(newBlog)
     .expect(400)
     .expect('Content-Type', /application\/json/)
@@ -100,12 +115,15 @@ test('missing title or url properties ', async () => {
   assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
 })
 
-  test('succeeds with status code 204 if id is valid', async () => {
+  test('deleting a blog succeeds with status code 204 if id is valid', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToDelete = blogsAtStart[0]
   
+  
+  
     await api
-      .delete(`/api/blogs/${blogToDelete.id}`)
+      .del(`/api/blogs/${blogToDelete.id}`)
+      .set('Authorization', token)
       .expect(204)
   
     const blogsAtEnd = await helper.blogsInDb()
@@ -120,19 +138,18 @@ test('missing title or url properties ', async () => {
 
     const blogsAtStart = await helper.blogsInDb()
     let blogToUpdate = blogsAtStart[0]
-    //console.log(blogToUpdate)
     blogToUpdate = {...blogToUpdate, likes: blogToUpdate.likes + 2}
    
   
     await api
           .put(`/api/blogs/${blogToUpdate.id}`)
+          .set('Authorization', token)
           .send(blogToUpdate)
           .expect(200)
           .expect('Content-Type', /application\/json/)
 
   
     const updatedBlog = (await helper.blogsInDb()).find(b => b.id === blogToUpdate.id)
-    //console.log(updatedBlog)
     assert.strictEqual(updatedBlog.likes, blogToUpdate.likes)
   })
 
@@ -145,6 +162,7 @@ test('missing title or url properties ', async () => {
   const usersAtStart = await helper.usersInDb()
     await api
       .post('/api/users')
+      .set('Authorization', token)
       .send(newUser)
       .expect(400)
       .expect('Content-Type', /application\/json/)
@@ -153,7 +171,6 @@ test('missing title or url properties ', async () => {
     const usersAtEnd = await helper.usersInDb()
     assert.strictEqual(usersAtEnd.length, usersAtStart.length)
   })
-  
   
 
 after(async () => {
